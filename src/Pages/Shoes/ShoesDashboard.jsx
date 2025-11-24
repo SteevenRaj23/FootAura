@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import React from "react";
 import Shop from "./Shop";
+import DisplayModel from "./DisplayModel";
 import img01 from "../../assets/01.jpg";
 import img02 from "../../assets/02.jpg";
 import img03 from "../../assets/03.jpg";
@@ -70,6 +71,7 @@ export default function Carousel() {
       </div>
     </div>
     <Shop/>
+    <DisplayModel/>
     </>
   );
 }

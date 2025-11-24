@@ -1,12 +1,12 @@
 import shoes1 from "../assets/shoes01.jpg";
 import shoes2 from "../assets/shoes02.jpg";
 import shoes3 from "../assets/shoes03.jpg";
-import shoes4 from "../assets/shoes01.jpg";
-import shoes5 from "../assets/shoes02.jpg";
-import shoes6 from "../assets/shoes03.jpg";
-import shoes7 from "../assets/shoes01.jpg";
-import shoes8 from "../assets/shoes02.jpg";
-import shoes9 from "../assets/shoes03.jpg";
+import shoes4 from "../assets/shoes04.jpg";
+import shoes5 from "../assets/shoes05.jpg";
+import shoes6 from "../assets/shoes06.jpg";
+import shoes7 from "../assets/shoes07.jpg";
+import shoes8 from "../assets/shoes08.jpg";
+import shoes9 from "../assets/shoes09.jpg";
 
 
 export const shoesData = [

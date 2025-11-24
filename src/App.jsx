@@ -6,6 +6,7 @@ import Parent from "./Components/Week1/Context/Parent";
 import Week1 from "./Components/Week1/Week1";
 import Dashboard from "./Pages/Dashboard";
 // import Help from "./Pages/Help";
+import Cart from "./Pages/Shoes/Cart";
 import NavBar from "./Pages/NavBar";
 import { lazy } from "react";
 import ShoesDashboard from "./Pages/Shoes/ShoesDashboard";
@@ -20,6 +21,7 @@ function App() {
         <Routes>
           {/* <Route path="/" element={<Home />} /> */}
           <Route path="/" element={<ShoesDashboard/>} />
+          <Route path="/Cart" element={<Cart />} />
           <Route path="/Dashboard" element={<Dashboard />} />
           <Route path="/week1" element={<Week1 />} />
           <Route
