@@ -8,6 +8,7 @@ export default function SearchBox() {
   useEffect(() => {
     const handler = setTimeout(() => {
       setDebouncedQuery(query);
+      console.log("Debounced Query:", query);
     }, 500); // 500ms delay
 
     return () => {
