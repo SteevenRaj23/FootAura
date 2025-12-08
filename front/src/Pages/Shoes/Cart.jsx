@@ -4,6 +4,7 @@ import CartItems from "../../Components/ShoesComponents/CartItems";
 import { useCart } from "../../Context/CartContext.jsx";
 import { useEffect,useMemo } from "react";
 import { Link } from "react-router";
+import {payment, usdToEth} from '../../Service/Payment.js'
 
 export default function Cart() {
      const {   
@@ -27,6 +28,13 @@ export default function Cart() {
          }
        
        , [cart]);
+
+   const paymentinit = async () => { 
+    const ethAmount = await usdToEth(getTotalPrice()); // Convert $100 to ETH
+    console.log(`Paying ${ethAmount} ETH`);
+    const res = await payment(ethAmount); // Amount in ETH
+    console.log("Transaction Hash:", res);
+   }    
 
   return (
     <>
@@ -79,7 +87,8 @@ export default function Cart() {
 
       <button
             className="mt-3 text-white bg-blue-600 hover:bg-blue-700 box-border border rounded-xl border-transparent focus:ring-4 focus:ring-blue-500 shadow-xs font-medium leading-5 rounded-base text-base px-25 py-3 focus:outline-none"
-          >Proceed to Checkout</button>
+            onClick={()=>paymentinit(100)}
+        >Proceed to Checkout</button>
     </div>
     </div>
      
