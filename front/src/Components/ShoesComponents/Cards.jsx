@@ -1,25 +1,29 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useCart } from "../../Context/CartContext";
 
 export default function ProductCard({
   image,
   title,
   price,
   rating = 5,
- onAddToCart
+  onAddToCart,
+ onclick
 }) {
+  const {setCartCount} = useCart();
+
   return (
-    <div className="w-full max-w-sm bg-neutral-primary-soft p-6 border border-gray-300 rounded-2xl shadow-xs">
-      <a href="#">
+    <div className="w-full max-w-sm bg-neutral-primary-soft p-6 border border-gray-300 rounded-2xl shadow-xs cursor-pointer" onClick={()=>{onclick()}}>
+      <div>
         <img
           className="rounded-base mb-6 h-64 w-full object-contain"
           src={image}
           alt={title}
         />
-      </a>
+      </div>
 
       <div>
         {/* Rating */}
-        <div className="flex items-center space-x-3 mb-6">
+        <div className="flex items-center space-x-3 mb-6" >
           <div className="flex items-center space-x-1 rtl:space-x-reverse">
             {Array.from({ length: rating }).map((_, i) => (
               <svg
@@ -54,7 +58,11 @@ export default function ProductCard({
 
           <button
             type="button"
-            onClick={onAddToCart}
+            onClick={(e)=>{
+              e.stopPropagation();
+              setCartCount((prev)=>prev+1);
+              onAddToCart()
+            }}
             className="inline-flex items-center text-white bg-blue-600 hover:bg-blue-700 box-border border rounded-xl border-transparent focus:ring-4 focus:ring-blue-500 shadow-xs font-medium leading-5 rounded-base text-sm px-3 py-2 focus:outline-none"
           >
             <svg

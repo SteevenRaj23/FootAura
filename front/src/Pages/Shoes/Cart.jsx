@@ -14,16 +14,18 @@ export default function Cart() {
            updateQuantity,
            clearCart,
            getTotalItems,
-           getTotalPrice } = useCart();
+           getTotalPrice,
+           getCart } = useCart();
    
         useEffect(()=>{
+          getCart()
            console.log(cart)
-           console.log(getTotalItems())
-           console.log(getTotalPrice())
-        },[cart])
+           //console.log(getTotalItems())
+           //console.log(getTotalPrice())
+        },[])
 
        const totalPrice = useMemo(() =>{
-         console.log("cal")
+        //  console.log("cal")
          return getTotalPrice() 
          }
        
@@ -52,10 +54,8 @@ export default function Cart() {
    
      <div className="flex flex-col">
       {cart.map((e)=>(
-        <CartItems Items = {e} updateQuantity={updateQuantity} removeItem={removeItem}/>
-      ))
-         
-      }
+        <CartItems Items = {e} updateQuantity={updateQuantity} removeItem={removeItem} />
+      ))}
       </div>
 
     <div className="border border-gray-200 rounded-2xl h-80 w-[400px] m-10 p-5">

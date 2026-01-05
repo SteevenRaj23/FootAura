@@ -1,6 +1,6 @@
 const Cart = require('../models/Cart');
 const Product = require('../models/Product');
-
+const mongoose = require("mongoose");
 
 // ==========================
 // GET CART
@@ -114,3 +114,31 @@ exports.clearCart = async (req, res, next) => {
     next(e);
   }
 };
+
+
+exports.deleteItem = async (req, res, next) => {
+  try {
+    const { productId, size, quantity } = req.body;
+    //const cart = await Cart.findOne({ items: { $elemMatch: { productId, size, quantity } } });
+    const cart = await Cart.findOneAndUpdate(
+      { "items.productId": productId },
+      {
+        $pull: {
+          items: {
+            productId: new mongoose.Types.ObjectId(productId),
+          },
+        },
+      },
+      { new: true }
+    );
+
+      if (!cart) {
+      return res.status(404).json({ message: "Item not found in cart" });
+    }
+
+    res.json({ message: "Item removed successfully", cart });
+  }
+  catch (e) {
+    next(e);
+  }   
+}

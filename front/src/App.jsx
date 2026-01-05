@@ -14,6 +14,7 @@ import Login from "./Pages/Shoes/Login";
 import Register from "./Pages/Shoes/Register";
 import Spinner from "./Components/ShoesComponents/SpinnerComponent/Spinner";
 import PublicRoute from "./Context/PublicRoute";
+import Display from "./Pages/Shoes/Display";
 
 const Help = lazy(() => import("./Pages/Help"));
 
@@ -28,6 +29,7 @@ function App() {
         <Routes>
           {/* <Route path="/" element={<Home />} /> */}
           <Route path="/" element={<ShoesDashboard />} />
+          <Route path="/display/:id" element={<Display />} />
           <Route path="/login" element={<PublicRoute><Login /></PublicRoute>}/>
           <Route path="/register" element={<PublicRoute><Register/></PublicRoute>} />
           <Route path="/Cart" element={<Cart />} />

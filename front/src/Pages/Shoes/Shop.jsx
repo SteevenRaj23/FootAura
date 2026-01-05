@@ -1,38 +1,12 @@
-// import ProductCard from "../../Components/ShoesComponents/Cards.jsx";
-// import shoe01 from "../../assets/shoes01.jpg";
-// import shoe02 from "../../assets/shoes02.jpg";
-// import shoe03 from "../../assets/shoes03.jpg";
-// import React from "react";
-
-// export default function App() {
-//   return (
-//     <div className="flex flex-wrap gap-6 justify-center p-10">
-//       <ProductCard
-//         image={shoe01}
-//         title="Nike Air Zoom SuperRep 2"
-//         price={249}
-//         rating={5}
-//       />
-//         <ProductCard
-//         image={shoe02}
-//         title="Nike Air Zoom SuperRep 2"
-//         price={249}
-//         rating={4}
-//       />
-//         <ProductCard
-//         image={shoe03}
-//         title="Nike Air Zoom SuperRep 2"
-//         price={249}
-//         rating={3.5}
-//       />
-//         </div>
-//   );
-// }
-
-import { shoesData } from "../../Data/product.js";
+// import { shoesData } from "../../Data/product.js";
 import ProductCard from "../../Components/ShoesComponents/Cards.jsx";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useCart } from "../../Context/CartContext.jsx";
+import axios from "axios";
+import {getShoesData} from "../../Service/dashboardService.js"
+import { useSpinner } from "../../Context/SpinnerContext.jsx";
+import Display from "./Display.jsx";
+import { useNavigate } from "react-router";
 
 export default function App() {
      const {   
@@ -43,23 +17,41 @@ export default function App() {
         clearCart,
         getTotalItems,
         getTotalPrice } = useCart();
+      const [shoesData,setShoesData] = useState([])  
+      const { showSpinner, hideSpinner } = useSpinner();
+      const navi = useNavigate();
 
      useEffect(()=>{
-        console.log(cart)
-        console.log(getTotalItems())
-        console.log(getTotalPrice())
-     },[cart])
+         fetchData();
+     },[])
+
+     const fetchData = async() => {
+      showSpinner();
+       try{
+         const data = await getShoesData();
+         setShoesData(data.data)    
+       }catch(error){
+         console.log(error)
+       }finally{
+        hideSpinner();
+       }
+     }
+
+    const displayShoeDetails = (shoe) => {
+        navi(`display/${shoe._id}`)
+    }
     
   return (
     <div className="flex flex-wrap gap-6 justify-center p-10">
-      {shoesData.map((item) => (
+      {shoesData.map((item,idx) => (
         <ProductCard
-          key={item.id}
-          image={item.image}
-          title={item.title}
+          key={idx}
+          image={item.images[0]}
+          title={item.name}
           price={item.price}
           rating={item.rating}
-          onAddToCart={() => addItem(item)}                     
+          onAddToCart={() => addItem(item)}       
+          onclick={()=>displayShoeDetails(item)}            
         />
       ))}
     </div>

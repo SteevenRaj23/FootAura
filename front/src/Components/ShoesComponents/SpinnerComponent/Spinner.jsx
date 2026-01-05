@@ -11,7 +11,7 @@ const Spinner = () => {
       role="status"
       className="
         fixed inset-0 w-full h-full 
-        bg-white/70 
+        bg-white/90 
         flex flex-col justify-center items-center 
         z-[9999]
       "  // === .global-spinner

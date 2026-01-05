@@ -10,6 +10,7 @@ import { MdKeyboardArrowDown } from "react-icons/md";
 
 export default function NavBar() { 
   const [userDetails,setuserDetails] =  useState('');
+  const {cartCount} = useCart(); 
  
   const navigate = useNavigate();
 
@@ -32,10 +33,6 @@ export default function NavBar() {
      localStorage.clear()
      setuserDetails(null);
   }
-
-
-   
-  const { getTotalItems } = useCart();
   
 
 
@@ -68,7 +65,7 @@ export default function NavBar() {
           <Link to="/cart" className="relative inline-block cursor-pointer">
             <IoCartOutline size={26} className="text-black" />
             <span className="absolute -top-2 -right-6 bg-blue-600 text-white text-xs font-semibold rounded-full px-1.5 py-0.5">
-              {getTotalItems()}
+              {cartCount}
             </span>
           </Link>
           {!userDetails ?

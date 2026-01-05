@@ -13,11 +13,11 @@ export const shoesData = [
   {
     id: 1,
     title: "Nike Air Zoom SuperRep 2",
-    price: 249,
+    price: 249,//
     rating: 5,
-    image: shoes1,
-    brand: "Nike",
-    category: "Training"
+    image: shoes1, //
+    brand: "Nike",//
+    category: "Training" //
   },
   {
     id: 2,
