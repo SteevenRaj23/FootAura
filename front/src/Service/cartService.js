@@ -42,18 +42,74 @@ export const removeFromCart = async (productId, size, quantity) => {
     const response = await axios.delete(
       `${import.meta.env.VITE_API_URL}/cart/remove`,
       {
-        data:{
-        productId,
-        size,
-        quantity,
-      },
+        data: {
+          productId,
+          size,
+          quantity,
+        },
         headers: {
           Authorization: `Bearer ${getIdToken()}`,
         },
       }
-     );
+    );
     return response.data;
   } catch (error) {
+    throw error;
+  }
+};
+
+export const updateCart = async (productId, size, quantity) => {
+  try {
+    const response = await axios.put(
+      `${import.meta.env.VITE_API_URL}/cart/update`,
+      {
+        productId,
+        size,
+        quantity,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${getIdToken()}`,
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const createOrder = async (Address) => {
+  try {
+    const response = await axios.post(
+      `${import.meta.env.VITE_API_URL}/orders`,
+      {
+        shippingAddress: Address.address,
+        paymentMethod: "bitcoin",
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${getIdToken()}`,
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.log("Error fetching cart data:", error);
+    throw error;
+  }
+};
+
+export const getMyOrders = async () => {
+  try {
+    const response = await axios.get(`${import.meta.env.VITE_API_URL}/orders/mine`, {
+      headers: {
+        Authorization: `Bearer ${getIdToken()}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.log("Error fetching cart data:", error);
     throw error;
   }
 };

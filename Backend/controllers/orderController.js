@@ -10,6 +10,8 @@ exports.createOrder = async (req, res, next) => {
   try {
     const { shippingAddress, paymentMethod } = req.body;
 
+    console.log(shippingAddress, paymentMethod);
+
     // Get user cart
     const cart = await Cart.findOne({ userId: req.user._id });
     if (!cart || cart.items.length === 0) {
@@ -63,7 +65,7 @@ exports.createOrder = async (req, res, next) => {
       items: orderItems,
       shippingAddress,
       paymentMethod: paymentMethod || "cod",
-      paymentStatus: paymentMethod === "cod" ? "pending" : "paid",
+      paymentStatus: "pending",
       totalAmount
     });
 

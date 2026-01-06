@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import {getCartData, addToCart, removeFromCart} from "../Service/cartService.js"
+import {getCartData, addToCart, removeFromCart, updateCart} from "../Service/cartService.js"
 import React from "react";
 
 const CartContext = createContext();
@@ -10,14 +10,8 @@ export const CartProvider = ({ children }) => {
   const [cartCount,setCartCount] = useState(0);
 
   useEffect(()=>{
-    console.log("hi context")
     getCart();
-  },[])
-
-  useEffect(()=>{
-    console.log("cart updated:",cart)
-  },[cart])
-  
+  },[])  
 
   const getCart = async() =>{ 
     try{
@@ -46,7 +40,6 @@ export const CartProvider = ({ children }) => {
   const addItem = async(product) => {
     try{
         const res = await addToCart(product._id,product.sizes[0].size,1)
-        console.log(res)
     }catch(error){
         console.log(error)
     }
@@ -57,26 +50,20 @@ export const CartProvider = ({ children }) => {
   const removeItem = async(id,size,quantity) => {
     try{
       const res = await removeFromCart(id,size,quantity)
-      console.log(res)
       await getCart()
     }catch(error){ 
       console.log(error)
     }
-    console.log(id,size,quantity);
   };
 
   // Update quantity (useful for +/- buttons)
-  const updateQuantity = (id, quantity) => {
-    if (quantity <= 0) {
-      removeItem(id);
-      return;
+  const updateQuantity = async(id, size, quantity) => {
+    try{
+      const res = await updateCart(id,size,quantity)
+      await getCart()
+    }catch(error){
+      console.log(error)
     }
-
-    setCart((prev) =>
-      prev.map((item) =>
-        item.id === id ? { ...item, quantity } : item
-      )
-    );
   };
 
   // Clear entire cart
@@ -91,11 +78,8 @@ export const CartProvider = ({ children }) => {
 
   // Get total price
   const getTotalPrice = () => {
-    // return cart.reduce(
-    //   (total, item) => total + item.quantity * item.price,
-    //   0
-    // );
-    return 0;
+    const total = cart.reduce((total, item) => total + (item.quantity * item.productId.price), 0)
+    return total;
   };
 
   return (

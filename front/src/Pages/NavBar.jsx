@@ -48,14 +48,14 @@ export default function NavBar() {
             <Link to="/">Home</Link>
           </li>
           <li className="text-sm font-medium text-gray-400 text-muted-foreground hover:text-black transition-colors cursor-pointer">
-            <Link to="/help">Help</Link>
+            <Link to="/help">Contact</Link>
           </li>
           <li className="text-sm font-medium text-gray-400 text-muted-foreground hover:text-black transition-colors cursor-pointer">
-            Services
+            <Link to="/myorders">My Orders</Link>
           </li>
-          <li className="text-sm font-medium text-gray-400 text-muted-foreground hover:text-black transition-colors cursor-pointer">
+          {/* <li className="text-sm font-medium text-gray-400 text-muted-foreground hover:text-black transition-colors cursor-pointer">
             Contact
-          </li>
+          </li> */}
           {userDetails && <li className="text-sm font-medium text-gray-400 text-muted-foreground hover:text-black transition-colors cursor-pointer" onClick={logout}>
             Logout
           </li>}

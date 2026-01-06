@@ -15,11 +15,11 @@ export default function CartItems({ Items, updateQuantity, removeItem}) {
             {Items.productId.name} - (Size: {Items.size})
           </h2>
           <div className="flex gap-5 items-center mt-3">
-            <button onClick={() => updateQuantity(Items.id, Items.quantity - 1)} className="border border-gray-200 hover:bg-blue-600 hover:text-white pr-3 pl-3  rounded-xl text-lg font-bold text-black pb-1">
+            <button onClick={() => updateQuantity(Items.productId._id,Items.size,Items.quantity - 1)} className="border border-gray-200 hover:bg-blue-600 hover:text-white pr-3 pl-3  rounded-xl text-lg font-bold text-black pb-1">
               -
             </button>
             <h3 className="text-lg font-semibold  text-center">{Items.quantity}</h3>
-            <button onClick={() => updateQuantity(Items.id, Items.quantity + 1)} className="border border-gray-200 hover:bg-blue-600 hover:text-white pr-3 pl-3  rounded-xl text-lg font-bold text-black pb-1">
+            <button onClick={() => updateQuantity(Items.productId._id,Items.size,Items.quantity + 1)} className="border border-gray-200 hover:bg-blue-600 hover:text-white pr-3 pl-3  rounded-xl text-lg font-bold text-black pb-1">
               +
             </button>
           </div>

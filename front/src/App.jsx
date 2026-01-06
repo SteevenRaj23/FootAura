@@ -15,6 +15,7 @@ import Register from "./Pages/Shoes/Register";
 import Spinner from "./Components/ShoesComponents/SpinnerComponent/Spinner";
 import PublicRoute from "./Context/PublicRoute";
 import Display from "./Pages/Shoes/Display";
+import MyOrders from "./Pages/Shoes/Myorder";
 
 const Help = lazy(() => import("./Pages/Help"));
 
@@ -34,6 +35,7 @@ function App() {
           <Route path="/register" element={<PublicRoute><Register/></PublicRoute>} />
           <Route path="/Cart" element={<Cart />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/myorders" element={<MyOrders />} />
           <Route path="/week1" element={<Week1 />} />
           <Route
             path="/Help"
