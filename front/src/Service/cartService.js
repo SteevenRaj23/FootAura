@@ -113,3 +113,45 @@ export const getMyOrders = async () => {
     throw error;
   }
 };
+
+export const verifyPayment = async (txHash,amount,orderId) => {
+  try {
+    const response = await axios.post(
+      `${import.meta.env.VITE_API_URL}/orders/metamask/verify`,
+      {
+         txHash,
+         amount,
+         orderId
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${getIdToken()}`,
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.log("Error fetching cart data:", error);
+    throw error;
+  }
+};
+
+export const updatePaymentStatus = async (orderId) => {
+  try {
+    const response = await axios.patch(
+      `${import.meta.env.VITE_API_URL}/orders/${orderId}/paymentstatus`,
+      {
+        paymentStatus: "paid"
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${getIdToken()}`,
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.log("Error fetching cart data:", error);
+    throw error;
+  }
+};

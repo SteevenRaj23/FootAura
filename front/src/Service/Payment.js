@@ -41,7 +41,7 @@ export async function payment(amountEth) {
     method: "eth_requestAccounts"
   });
 
-      console.log(accounts)
+      // console.log(accounts)
 
   // Ensure you are on Ganache chain 1337
   const chainId = await window.ethereum.request({ method: "eth_chainId" });

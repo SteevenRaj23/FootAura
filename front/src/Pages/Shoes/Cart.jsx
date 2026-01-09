@@ -6,7 +6,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router";
 import { payment, usdToEth } from "../../Service/Payment.js";
 import Address from "./Address.jsx";
-import {createOrder} from "../../Service/cartService.js";
+import { createOrder, verifyPayment,updatePaymentStatus } from "../../Service/cartService.js";
 
 export default function Cart() {
   const [open, setOpen] = useState(false);
@@ -30,21 +30,26 @@ export default function Cart() {
     return getTotalPrice();
   }, [cart]);
 
-  const paymentinit = async () => {
+  const paymentinit = async (orderId) => {
     const ethAmount = await usdToEth(getTotalPrice()); // Convert $100 to ETH
     console.log(`Paying ${ethAmount} ETH`);
     const res = await payment(ethAmount); // Amount in ETH
     console.log("Transaction Hash:", res);
+    const paymentInfo = await verifyPayment(res, ethAmount, orderId);
+    console.log(paymentInfo);
+    return paymentInfo;
   };
 
-  const handleAddressSubmit = async(data) => {
-    console.log(data);
-    try{
-      const res = await createOrder(data)
-      await paymentinit()
-      getCart()
-    } catch(error){
-      console.log(error)
+  const handleAddressSubmit = async (data) => {
+    try {
+      const res = await createOrder(data);
+      const paymentdetails = await paymentinit(res._id);
+      if ((paymentdetails.message = "Ganache payment verified!")) {
+        await updatePaymentStatus(res._id);
+      }
+      getCart();
+    } catch (error) {
+      console.log(error);
     }
   };
 

@@ -5,21 +5,23 @@ import { useParams } from "react-router";
 import { useState, useEffect } from "react";
 import { useSpinner } from "../../Context/SpinnerContext.jsx";
 import ReactImageMagnify from "react-image-magnify";
+import { useCart } from "../../Context/CartContext.jsx";
 
 const colors = {
   red: "bg-red-500",
   black: "bg-black",
-  brown:"bg-amber-700",
-  blue:"bg-blue-500",
-  white:"bg-white border-2 border-gray-300",
-  grey:"bg-gray-500",
-  green:"bg-green-500",
+  brown: "bg-amber-700",
+  blue: "bg-blue-500",
+  white: "bg-white border-2 border-gray-300",
+  grey: "bg-gray-500",
+  green: "bg-green-500",
 };
 
 export default function Display() {
   const [data, setData] = useState([]);
   const { id } = useParams();
   const { showSpinner, hideSpinner } = useSpinner();
+  const { addItem,setCartCount } = useCart();
 
   useEffect(() => {
     fetchshoeById(id);
@@ -125,13 +127,19 @@ export default function Display() {
                 <h6 className="border-2 border-gray-200 px-3 py-1">7</h6>
                 <h6 className="border-2 border-gray-200 px-3 py-1">8</h6>
                 <h6 className="border-2 border-gray-200 px-3 py-1">9</h6>
-              </div>
-            </div>
 
-            <div>
-              <button className="mt-30 ml-90 inline-flex items-center text-white bg-blue-600 hover:bg-blue-700 box-border border rounded-xl border-transparent focus:ring-4 focus:ring-blue-500 shadow-xs font-medium leading-5 rounded-base text-sm px-10 py-2 focus:outline-none">
-                ADD TO CART
-              </button>
+                <div>
+                  <button
+                    className="mt-0 ml-0 inline-flex items-center text-white bg-blue-600 hover:bg-blue-700 box-border border rounded-xl border-transparent focus:ring-4 focus:ring-blue-500 shadow-xs font-medium leading-5 rounded-base text-sm px-10 py-2 focus:outline-none"
+                    onClick={() => {
+                      setCartCount((prev) => prev + 1);
+                      addItem(data);
+                    }}
+                  >
+                    ADD TO CART
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         </>

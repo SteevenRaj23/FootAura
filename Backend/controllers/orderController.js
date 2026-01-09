@@ -114,3 +114,23 @@ exports.updateOrderStatus = async (req, res, next) => {
     next(err);
   }
 };
+
+exports.updatePaymentStatus = async (req , res , next) => {
+    try{
+       const { paymentStatus } = req.body;
+
+    const order = await Order.findByIdAndUpdate(
+      req.params.id,
+      { $set: { paymentStatus } },
+      { new: true }
+    );
+
+    if (!order)
+      return res.status(404).json({ message: "Order not found" });
+
+    res.json(order);
+
+    }catch(err){
+       next(err)
+    }
+}
