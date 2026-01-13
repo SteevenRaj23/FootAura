@@ -37,9 +37,9 @@ export const CartProvider = ({ children }) => {
 
 
   // Add item to cart
-  const addItem = async(product) => {
+  const addItem = async(product,size=7) => {
     try{
-        const res = await addToCart(product._id,product.sizes[0].size,1)
+        const res = await addToCart(product._id,size,1)
     }catch(error){
         console.log(error)
     }

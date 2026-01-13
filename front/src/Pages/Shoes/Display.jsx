@@ -21,7 +21,8 @@ export default function Display() {
   const [data, setData] = useState([]);
   const { id } = useParams();
   const { showSpinner, hideSpinner } = useSpinner();
-  const { addItem,setCartCount } = useCart();
+  const { addItem, setCartCount } = useCart();
+  const [selectedSize, setSelectedSize] = useState(null);
 
   useEffect(() => {
     fetchshoeById(id);
@@ -124,16 +125,47 @@ export default function Display() {
 
               <p className="text-xl ml-15 mt-2">Sizes</p>
               <div className="flex gap-5 ml-15 mt-2">
-                <h6 className="border-2 border-gray-200 px-3 py-1">7</h6>
+                {data?.sizes?.map((item) => {
+                  const isSelected = selectedSize === item.size;
+                  const isOutOfStock = item.stock <= 0;
+
+                  return (
+                    <h6
+                      key={item.size}
+                      onClick={() => {
+                        if (!isOutOfStock) {
+                          setSelectedSize(item.size);
+                        }
+                      }}
+                      className={`
+                        border-2 px-3 py-1 
+                        ${
+                          isSelected
+                            ? "border-black bg-black text-white"
+                            : "border-gray-200"
+                        }
+                        ${
+                          isOutOfStock
+                            ? "text-gray-400 cursor-not-allowed line-through"
+                            : "cursor-pointer hover:border-black"
+                        }
+                      `}
+                    >
+                      {item.size}
+                    </h6>
+                  );
+                })}
+                {/* <h6 className="border-2 border-gray-200 px-3 py-1">7</h6>
                 <h6 className="border-2 border-gray-200 px-3 py-1">8</h6>
-                <h6 className="border-2 border-gray-200 px-3 py-1">9</h6>
+                <h6 className="border-2 border-gray-200 px-3 py-1">9</h6> */}
 
                 <div>
                   <button
-                    className="mt-0 ml-0 inline-flex items-center text-white bg-blue-600 hover:bg-blue-700 box-border border rounded-xl border-transparent focus:ring-4 focus:ring-blue-500 shadow-xs font-medium leading-5 rounded-base text-sm px-10 py-2 focus:outline-none"
+                    disabled={!selectedSize}
+                    className={`mt-0 ml-0 inline-flex items-center text-white bg-blue-600 hover:bg-blue-700 box-border border rounded-xl border-transparent focus:ring-4 focus:ring-blue-500 shadow-xs font-medium leading-5 rounded-base text-sm px-10 py-2 focus:outline-none`}
                     onClick={() => {
                       setCartCount((prev) => prev + 1);
-                      addItem(data);
+                      addItem(data, selectedSize);
                     }}
                   >
                     ADD TO CART
