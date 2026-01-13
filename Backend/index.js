@@ -16,6 +16,10 @@ app.use(morgan('dev'));
 app.use(cors());
 
 
+app.get("/",(req,res)=>{
+   res.status(200).json("backend Running")
+})
+
 //Routes
 app.use('/api/auth',require('./routes/authRoutes'))
 app.use('/api/products', require('./routes/productRoutes'));
